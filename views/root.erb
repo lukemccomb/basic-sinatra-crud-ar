@@ -2,4 +2,15 @@
   <%= flash[:register_notice] %>
 <% end %>
 
-<a href="/register/">Register</a>
+<a href="/register/">Register</a><br>
+
+<form action="/login/" method="post">
+  <label for="username">Username:</label><br>
+  <input name="username" id="username" type="text"><br>
+  <label for="password">Password:</label><br>
+  <input name="password" id="password" type="text"><br>
+  <button type="submit">Log In</button>
+</form>
+
+<p>Welcome, <%= username %></p>
+

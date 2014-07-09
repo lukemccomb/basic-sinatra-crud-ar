@@ -18,4 +18,15 @@ feature "homepage" do
     click_button "Submit"
     expect(page).to have_content("Thank you for registering")
   end
+  scenario "login user" do
+    click_link "Register"
+    fill_in "username", :with => "peter"
+    fill_in "password", :with => "luke"
+    click_button "Submit"
+    fill_in "username", :with => "peter"
+    fill_in "password", :with => "luke"
+    click_button "Log In"
+    # save_and_open_page
+    expect(page).to have_content("Welcome, peter")
+  end
 end

@@ -9,6 +9,8 @@ class App < Sinatra::Application
   end
 
   get "/" do
-    "Hello"
+    erb :root, :layout => :main_layout
   end
 end
+
+# WRITE TEST FIRST

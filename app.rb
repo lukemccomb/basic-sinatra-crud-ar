@@ -34,9 +34,15 @@ class App < Sinatra::Application
       flash[:login_fail] = "Please enter a username."
       redirect "/register/"
     end
-    @database_connection.sql("INSERT INTO users (username, password) VALUES ('#{params[:username]}', '#{params[:password]}')")
-    flash[:register_notice] = "Thank you for registering"
-    redirect "/"
+
+    begin
+      @database_connection.sql("INSERT INTO users (username, password) VALUES ('#{params[:username]}', '#{params[:password]}')")
+      flash[:register_notice] = "Thank you for registering"
+      redirect "/"
+    rescue
+      flash[:login_fail] = "SHIIIITTTTTT that name be take brah."
+      redirect "/register/"
+    end
   end
 
   post "/login/" do

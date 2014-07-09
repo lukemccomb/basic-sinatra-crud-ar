@@ -11,6 +11,10 @@ class App < Sinatra::Application
   get "/" do
     erb :root, :layout => :main_layout
   end
+
+  get "/register/" do
+    erb :register, :layout => :main_layout
+  end
 end
 
 # WRITE TEST FIRST

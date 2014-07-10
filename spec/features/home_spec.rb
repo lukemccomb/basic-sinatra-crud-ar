@@ -3,30 +3,30 @@ feature "homepage" do
     visit "/"
   end
   scenario "visitor visits homepage" do
-    skip
     expect(page).to have_link("Register")
   end
   scenario "visit registration page" do
-    skip
     click_link "Register"
     expect(page).to have_content("Username:")
     expect(page).to have_content("Password:")
     expect(page).to have_button("Submit")
   end
   scenario "register new user" do
-    skip
     click_link "Register"
     fill_in "username", :with => "peter"
     fill_in "password", :with => "luke"
     click_button "Submit"
     expect(page).to have_content("Thank you for registering")
   end
-  scenario "login user" do
-    skip
-    click_link "Register"
+end
+feature "register" do
+  before(:each) do
+    visit "/register/"
     fill_in "username", :with => "peter"
     fill_in "password", :with => "luke"
     click_button "Submit"
+  end
+  scenario "login user" do
     fill_in "username", :with => "peter"
     fill_in "password", :with => "luke"
     click_button "Log In"
@@ -34,15 +34,13 @@ feature "homepage" do
     expect(page).to have_content("Welcome, peter")
   end
   scenario "logged in user" do
-    skip
     fill_in "username", :with => "peter"
     fill_in "password", :with => "luke"
     click_button "Log In"
     click_link "Logout"
     expect(page).to have_link("Register")
   end
-  scenario "login validation" do
-    skip
+  scenario "register validation" do
     click_link "Register"
     click_button "Submit"
     expect(page).to have_content("Please enter a username and password.")
@@ -54,11 +52,27 @@ feature "homepage" do
     click_button "Submit"
     expect(page).to have_content("Please enter a username.")
   end
+end
+feature "many users" do
+  before(:each) do
+    visit "/register/"
+    fill_in "username", :with => "peter"
+    fill_in "password", :with => "luke"
+    click_button "Submit"
+    visit "/register/"
+    fill_in "username", :with => "lindsay"
+    fill_in "password", :with => "luke"
+    click_button "Submit"
+    visit "/register/"
+    fill_in "username", :with => "jeff"
+    fill_in "password", :with => "luke"
+    click_button "Submit"
+  end
   scenario "see usernames on login" do
     fill_in "username", :with => "peter"
     fill_in "password", :with => "luke"
     click_button "Log In"
-    expect(page).to have_content("Welcome, peter Sort lindsay")
+    expect(page).to have_content("Welcome, peter Sort lindsay jeff Logout")
   end
   scenario "click sort button to sort alphabetize usernames" do
     fill_in "username", :with => "peter"
@@ -66,5 +80,13 @@ feature "homepage" do
     click_button "Log In"
     click_button "Sort"
     expect(page).to have_content("jeff lindsay")
+  end
+  scenario "deletes users successfully" do
+    fill_in "username", :with => "peter"
+    fill_in "password", :with => "luke"
+    click_button "Log In"
+    fill_in "delete", :with => "jeff"
+    click_button "Delete"
+    expect(page).to have_no_content("jeff")
   end
 end

@@ -15,8 +15,9 @@ class App < Sinatra::Application
   get "/" do
     if session[:user_id]
       @username = @database_connection.sql("SELECT username FROM users WHERE id=#{session[:user_id]}").first["username"]
+      @user_arr = @database_connection.sql("SELECT username FROM users").map {|hash| hash["username"]}
     end
-    erb :root, :locals => {:username => @username}, :layout => :main_layout
+    erb :root, :locals => {:username => @username, :user_arr => @user_arr}, :layout => :main_layout
   end
 
   get "/register/" do
@@ -40,7 +41,7 @@ class App < Sinatra::Application
       flash[:register_notice] = "Thank you for registering"
       redirect "/"
     rescue
-      flash[:login_fail] = "SHIIIITTTTTT that name be take brah."
+      flash[:login_fail] = "Awww CRUD! That username is taken."
       redirect "/register/"
     end
   end

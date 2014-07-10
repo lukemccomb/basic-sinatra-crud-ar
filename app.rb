@@ -16,14 +16,11 @@ class App < Sinatra::Application
     if session[:user_id]
       @username = @database_connection.sql("SELECT username FROM users WHERE id=#{session[:user_id]}").first["username"]
       @user_arr = @database_connection.sql("SELECT username FROM users").map {|hash| hash["username"] if hash["username"] != @username}
+      @user_arr.delete(nil)
     end
-    if @bool_user_sort
+    if params[:sort]
       @user_arr.sort!
     end
-      p "-"*80
-      p @bool_user_sort
-      p "-"*80
-
     erb :root, :locals => {:username => @username, :user_arr => @user_arr}, :layout => :main_layout
   end
 
@@ -31,10 +28,9 @@ class App < Sinatra::Application
     erb :register, :layout => :main_layout
   end
 
-  get "/sort/" do
-    @bool_user_sort = true
-    redirect "/"
-  end
+  # get "/sort/" do
+  #   redirect "/"
+  # end
 
   post "/register/" do
     if params[:password] == "" && params[:username] == ""

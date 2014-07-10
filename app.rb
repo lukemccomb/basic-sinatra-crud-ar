@@ -9,8 +9,7 @@ class App < Sinatra::Application
 
   def initialize
     super
-    @database_connection = DatabaseConnection.new(ENV["RACK_ENV"])
-    @bool_user_sort = false
+    @database_connection = DatabaseConnection.establish(ENV["RACK_ENV"])
   end
 
   get "/" do

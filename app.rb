@@ -10,6 +10,7 @@ class App < Sinatra::Application
   def initialize
     super
     @database_connection = DatabaseConnection.new(ENV["RACK_ENV"])
+    @bool_user_sort = false
   end
 
   get "/" do
@@ -17,11 +18,23 @@ class App < Sinatra::Application
       @username = @database_connection.sql("SELECT username FROM users WHERE id=#{session[:user_id]}").first["username"]
       @user_arr = @database_connection.sql("SELECT username FROM users").map {|hash| hash["username"] if hash["username"] != @username}
     end
+    if @bool_user_sort
+      @user_arr.sort!
+    end
+      p "-"*80
+      p @bool_user_sort
+      p "-"*80
+
     erb :root, :locals => {:username => @username, :user_arr => @user_arr}, :layout => :main_layout
   end
 
   get "/register/" do
     erb :register, :layout => :main_layout
+  end
+
+  get "/sort/" do
+    @bool_user_sort = true
+    redirect "/"
   end
 
   post "/register/" do

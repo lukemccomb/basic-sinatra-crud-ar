@@ -58,6 +58,13 @@ feature "homepage" do
     fill_in "username", :with => "peter"
     fill_in "password", :with => "luke"
     click_button "Log In"
-    expect(page).to have_content("Welcome, peter lindsay")
+    expect(page).to have_content("Welcome, peter Sort lindsay")
+  end
+  scenario "click sort button to sort alphabetize usernames" do
+    fill_in "username", :with => "peter"
+    fill_in "password", :with => "luke"
+    click_button "Log In"
+    click_button "Sort"
+    expect(page).to have_content("jeff lindsay")
   end
 end

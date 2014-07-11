@@ -10,49 +10,68 @@
   <label for="username">Username:</label><br>
   <input name="username" id="username" type="text"><br>
   <label for="password">Password:</label><br>
-  <input name="password" id="password" type="text"><br>
+  <input name="password" id="password" type="password"><br>
   <button type="submit">Log In</button>
 </form>
 
 <% else %>
 
-<p>Welcome, <%= username %></p>
+<section class="clearfix">
+  <article class="one_half">
+    <h1>Welcome, <%= username %></h1>
+  </article>
+</section>
 
-<form action="/" method="get">
-  <select name="sort">
-    <option value="null">Choose...</option>
-    <option value="asc">Ascending</option>
-    <option value="desc">Descending</option>
-  </select>
-  <button type="submit">Sort</button>
-</form>
-
-<ul style="list-style-type: none;">
-<% @user_arr.each do |str| %>
-    <li><%= str %></li>
-<% end %>
-</ul><br>
-
-<form action="/fish/" method="post">
-  <label for="fishname">Fish Name:</label><br>
-  <input name="name" id="fishname" type="text"><br>
-  <label for="wiki_url">Fish Wiki URL:</label><br>
-  <input name="wiki" id="wiki_url" type="text"><br>
-  <button type="submit">Add Fish</button>
-</form><br>
-
-<ul style="list-style-type: none;">
-  <% @fish_arr.each do |hsh| %>
-    <li><a href="<%= hsh["wiki"] %>"><%= hsh["name"] %></a></li>
-  <% end %>
-</ul><br>
+<section class="clearfix">
+  <article class="one_half">
+    <h2>Your Fish:</h2>
+    <ul>
+      <% @fish_arr.each do |hsh| %>
+        <li><a href="<%= hsh["wiki"] %>"><%= hsh["name"] %></a></li>
+      <% end %>
+    </ul><br>
+  </article>
+  <article class="one_half">
+    <h2>Add Fish:</h2>
+    <form action="/fish/" method="post">
+      <label for="fishname">Fish Name:</label><br>
+      <input name="name" id="fishname" type="text"><br>
+      <label for="wiki_url">Fish Wiki URL:</label><br>
+      <input name="wiki" id="wiki_url" type="text"><br>
+      <button type="submit">Add Fish</button>
+    </form>
+  </article>
+</section>
+<hr>
+<section class="clearfix">
+  <article class="one_half">
+    <h2>Users:</h2>
+    <form action="/" method="get">
+      <select name="sort">
+        <option value="asc">Choose...</option>
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+      </select>
+      <button type="submit">Sort</button>
+    </form>
+    <ul>
+      <% @user_arr.each do |str| %>
+        <li><%= str %></li>
+      <% end %>
+    </ul>
+  </article>
+  <article class="one_half">
+    <h2>Delete Users:</h2>
+    <form action="/delete/" method="post">
+      <label for="delete">Enter username to delete</label><br>
+      <input name="delete" id="delete" type="text"><br>
+      <button type="submit">Delete</button>
+    </form>
+  </article>
+</section>
 
 <a href="/logout/">Logout</a><br>
 
-<form action="/delete/" method="post">
-  <label for="delete">Enter username to delete</label><br>
-  <input name="delete" id="delete" type="text"><br>
-  <button type="submit">Delete</button>
-</form>
+
 
 <% end %>

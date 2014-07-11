@@ -17,15 +17,24 @@ class App < Sinatra::Application
       @username = @database_connection.sql("SELECT username FROM users WHERE id=#{session[:user_id]}").first["username"]
       @user_arr = @database_connection.sql("SELECT username FROM users").map {|hash| hash["username"] if hash["username"] != @username}
       @user_arr.delete(nil)
+
+      @fish_arr = @database_connection.sql("SELECT name, wiki FROM fish")
     end
-    if params[:sort]
+    if params[:sort] == "asc"
       @user_arr.sort!
+    elsif params[:sort] == "desc"
+      @user_arr.sort! {|x,y| y <=> x }
     end
-    erb :root, :locals => {:username => @username, :user_arr => @user_arr}, :layout => :main_layout
+    erb :root, :locals => {:username => @username, :user_arr => @user_arr, :fish_arr => @fish_arr}, :layout => :main_layout
   end
 
   get "/register/" do
     erb :register, :layout => :main_layout
+  end
+
+  post "/fish/" do
+    @database_connection.sql("INSERT INTO fish (users_id, name, wiki) VALUES (#{session[:user_id]},'#{params[:name]}', '#{params[:wiki]}')")
+    redirect "/"
   end
 
   post "/delete/" do

@@ -2,7 +2,7 @@
 
 
 body {
-    background-color: #cccccc;
+    background-color: #b7d6ff;
     font-family: Helvetica, sans-serif;
     font-size: 110%;
     padding: 1% 5%;
@@ -33,11 +33,15 @@ a:hover {
     text-align: left;
     line-height: 150%;
     padding: 1% 5%;
-    border-radius: 5%;
+    border-radius: 1%;
 }
 
 ul {
     list-style: none;
+}
+
+#right_float {
+    text-align: right;
 }
 
 /* ----- =columns ----- */

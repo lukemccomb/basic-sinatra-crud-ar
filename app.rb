@@ -1,7 +1,6 @@
 require "sinatra"
-require "rack-flash"
+require "active_record"
 require "gschool_database_connection"
-
 
 class App < Sinatra::Application
   enable :sessions

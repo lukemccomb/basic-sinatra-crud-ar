@@ -51,7 +51,7 @@
   </article>
 </section>
 <section class="clearfix">
-  <article class="one_half">
+  <article class="one_third">
     <h2>Users:</h2>
     <form action="/" method="get">
       <select name="sort">
@@ -63,12 +63,16 @@
     </form>
     <ul>
       <% @user_arr.each do |str| %>
-        <li><%= str %></li>
+        <li><a href="<%=  %>"><%= str %></a></li>
       <% end %>
     </ul>
   </article>
-  <article class="one_half">
-    <h2>Delete Users:</h2>
+  <article class="one_third">
+    <h2>Users Fish:</h2>
+
+  </article>
+  <article class="one_third">
+    <h2>Users:</h2>
     <form action="/delete/" method="post">
       <label for="delete">Enter username to delete</label><br>
       <input name="delete" id="delete" type="text"><br>

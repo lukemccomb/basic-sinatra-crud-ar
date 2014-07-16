@@ -30,7 +30,6 @@ feature "register" do
     fill_in "username", :with => "peter"
     fill_in "password", :with => "luke"
     click_button "Log In"
-    # save_and_open_page
     expect(page).to have_content("Welcome, peter")
   end
   scenario "logged in user" do

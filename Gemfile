@@ -9,3 +9,7 @@ gem "capybara"
 gem "rake"
 gem "pg", "~> 0.17.1"
 gem "launchy"
+gem "gschool_database_connection"
+
+# delete satavaseconnect and databaseconnection spec and fix class references everywhere
+
